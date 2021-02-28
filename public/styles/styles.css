@@ -1,0 +1,15 @@
+body{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+a{
+    color:brown;
+    text-decoration: none;
+
+}
+a:hover{
+    color:rgb(6, 236, 26);
+    background-color: cornflowerblue;
+}
