@@ -36,11 +36,22 @@ function handleSearchPage(req,res){
 
 function handleBookSearch(req, res){
     let searchquery = req.body.searchquery;
-    let terms = req.body.se;
-    let concatSearch= searchquery +'+in'+terms;
+    console.log(searchquery);
+    let terms ;
+    
+    if (req.body.author === 'on') {
+        terms = "inauthor";
+    
+    } else if (req.body.title === 'on') {
+        terms = "intitle";
+    }
+    let concatSearch= terms+"+"+searchquery;
+    console.log(searchquery);
+    console.log(terms);
     console.log(concatSearch);
     let defaultInmge = "https://i.imgur.com/J5LVHEL.jpg";
     const url = 'https://www.googleapis.com/books/v1/volumes';
+    
     let query = {
         q : concatSearch,
     }
