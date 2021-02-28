@@ -17,26 +17,30 @@ require('dotenv').config();
 const PORT = process.env.PORT;
 
 app.get('/', hendleHome);
-app.get('/searches/new', handleSearchPage);
-app.post('/books', handleBookSearch);
+// app.get('/searches/new', handleSearchPage);
+app.post('/show', handleBookSearch);
+app.get('/error', handleError);
+
 app.get('*',handleerror);
 function handleerror(req, res){
-    res.status(404).send({status: 404, response: 'Page not found'});
+    handleError(req,res);
 
 }
-
+function handleError(req,res){
+    res.render('pages/error',{status:404, message:"Sorry some thing went wrong"});
+}
 
 function hendleHome(req, res){
     res.render('pages/index');
 }
 
-function handleSearchPage(req,res){
-    res.render('pages/searches/new');
-}
+// function handleSearchPage(req,res){
+//     res.render('pages/searches/new');
+// }
 
 function handleBookSearch(req, res){
     let searchquery = req.body.searchquery;
-    console.log(searchquery);
+
     let terms ;
     
     if (req.body.author === 'on') {
@@ -46,14 +50,13 @@ function handleBookSearch(req, res){
         terms = "intitle";
     }
     let concatSearch= terms+"+"+searchquery;
-    console.log(searchquery);
-    console.log(terms);
-    console.log(concatSearch);
+
     let defaultInmge = "https://i.imgur.com/J5LVHEL.jpg";
     const url = 'https://www.googleapis.com/books/v1/volumes';
     
     let query = {
         q : concatSearch,
+        maxResults : 10
     }
     superagent.get(url).query(query).then(data =>{
         // res.status(200).send(data.body.items[0].valumeInfo);
@@ -73,15 +76,17 @@ function handleBookSearch(req, res){
         if(image === undefined){
             image = defaultInmge;
         }
+        image = image.replace(/^http:\/\//i, 'https://');
 
         
         return new Book(title, author, description, image);
       });
  
-        res.render('pages/searchresult', {books:arrayBooks });
+        res.render('pages/searches/new', {books:arrayBooks });
 
     }).catch(error =>{
-        res.status(500).send('Api connection error ' +error);
+        handleError(req,res);
+
     });
 
     

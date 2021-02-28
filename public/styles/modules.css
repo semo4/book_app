@@ -1,0 +1,63 @@
+.check-cont{
+    display: block;
+    text-align: left;
+}
+  .checkbox{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 4px;
+    font-weight: bold;
+    box-sizing: border-box;
+    background-color: gray;
+    color: #fff;
+    font-family: 'Cinzel', serif;
+  }
+
+
+
+  .books{
+    display : flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .book-container{
+      width: 30%;
+      margin : 20px;
+      border-radius: 5%;
+      box-shadow: 5px 10px 18px #000;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+
+  }
+  img{
+      margin: 20px; 
+      width: 50%;
+      height: 40vh
+  }
+  .book-container{
+    background-color: #D8D8D8;
+  }
+  .book-container h1{
+      color :rgb(99, 97, 97);
+      font-size: 1.2rem;
+      padding: 10px;
+      font-weight: bold;
+  }
+  .book-container h2{
+    color :rgb(99, 97, 97);
+    font-size: 1rem;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.book-container p{
+
+    font-size: 1rem;
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
