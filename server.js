@@ -34,22 +34,17 @@ function hendleHome(req, res){
     res.render('pages/index');
 }
 
-// function handleSearchPage(req,res){
-//     res.render('pages/searches/new');
-// }
+
 
 function handleBookSearch(req, res){
     let searchquery = req.body.searchquery;
 
     let terms = req.body.select;
+    console.log(req);
+    console.log(terms);
     
-    // if (req.body.author === 'on') {
-    //     terms = "inauthor";
-    
-    // } else if (req.body.title === 'on') {
-    //     terms = "intitle";
-    // }
     let concatSearch= searchquery+"+in"+terms;
+    console.log(concatSearch);
 
     let defaultInmge = "https://i.imgur.com/J5LVHEL.jpg";
     const url = 'https://www.googleapis.com/books/v1/volumes';
@@ -82,7 +77,7 @@ function handleBookSearch(req, res){
         return new Book(title, author, description, image);
       });
  
-        res.render('pages/searches/new', {books:arrayBooks });
+        res.render('pages/searches/show', {books:arrayBooks });
 
     }).catch(error =>{
         handleError(req,res);
