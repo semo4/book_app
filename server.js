@@ -26,7 +26,9 @@ app.get('/search', hendleSearch);
 // app.get('/searches/new', handleSearchPage);
 app.post('/show', handleBookSearch);
 app.get('/error', handleError);
-app.post('/save', handlesave);
+app.post('/books', handlesave);
+app.get('/books/:id', handleDetails);
+
 app.get('*',handleerror);
 function handleerror(req, res){
     handleError(req,res);
@@ -37,24 +39,47 @@ function handleError(req,res){
 }
 
 function hendleHome(req, res){
-    res.render('pages/index');
+    let sqlQuery = `select * from books`;
+    let count = "select count(id) as total from books";
+
+    client.query(sqlQuery).then(data => {
+        // console.log('data returned back from db ', countData());
+        var totalBook ;
+        client.query(count).then(total => {
+            totalBook = total.rows[0];
+           
+            
+        });
+        res.render('pages/index', {books: data.rows , total: totalBook});
+    }).catch(error =>{
+       
+        handleError(req,res);
+    });
+    
 }
+
 function hendleSearch(req, res){
     res.render('pages/searches/new');
 }
 
 function handlesave(req, res){
     let title = req.body.title;
-    let author =  req.body.authors;
+    let author =  req.body.author;
     let description =  req.body.description;
     let image =  req.body.image;
     let isbn =  req.body.isbn;
-    console.log('data returned back from db ',  [title,author, isbn, image, description]);
     let sqlQuery = `insert into books(title,author, isbn, image_url, description) values ($1,$2,$3,$4,$5)returning *`;
     let value = [title,author, isbn, image, description];
     client.query(sqlQuery, value).then(data => {
-        console.log('data returned back from db ', data);
-        res.redirect('/');
+        
+        let lastItem = `SELECT * FROM books ORDER BY id DESC LIMIT 1`;
+ 
+        client.query(lastItem).then(data => {
+            
+            res.redirect('/books/'+data.rows[0].id);
+        });
+        // console.log('data returned back from db ', data);
+        
     });
 }
 
@@ -84,6 +109,7 @@ function handleBookSearch(req, res){
         let author = obj.volumeInfo.authors;
         let description = obj.volumeInfo.description;
         let image = obj.volumeInfo.imageLinks.thumbnail;
+        // console.log('data returned back from db ', image);
         let isbn = obj.volumeInfo.industryIdentifiers;
         
         if(author === undefined){
@@ -100,8 +126,11 @@ function handleBookSearch(req, res){
       
         if(image === undefined){
             image = defaultInmge;
+            
         }
+        
         image = image.replace(/^http:\/\//i, 'https://');
+       
 
         // let sqlQuery = `insert into citylocation(c_name,display_name, lat, lon) values ($1,$2,$3,$4)returning *`;
         // let value = [searchQuery, displayName, latitude, longitude];
@@ -115,13 +144,23 @@ function handleBookSearch(req, res){
 
     }).catch(error =>{
         handleError(req,res);
-        console.log(error);
+        
 
     });
+}
 
-    
+function handleDetails(req,res){
+    let id = req.params.id;
+    let sqlQuery = `SELECT * FROM books WHERE id = ${id}`;
+ 
+    client.query(sqlQuery).then(data => {
+       
+        res.render('pages/books/detail', {books: data.rows});
+    }).catch(error =>{
+        handleError(req,res);
+       
 
-
+    });
 }
 
 function Book(title, author, description, image,isbn){

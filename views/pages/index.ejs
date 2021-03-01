@@ -24,14 +24,31 @@
     </header>
     <div class="container">
         <div class="header">
-            <h1> Search By Tilte Or Author </h1>
+            <h1><% total %> Saved Books</h1>
         </div>
         <div class="form-contanier">
            <h1>Hello to Search Book </h1><br>
            <h1><a href="/search">Search Page</a></h1>
         </div>
-    </div>
+        <div class="books">
+            <% books.forEach((items)=>{ %>
+                <div class="book-container">
+                    <img src="<%= items.image_url%>">
+                    <h1><%= items.title%></h1>
+                    <h2><%= items.author%></h2>
+                    <h2><%= items.isbn%></h2>
+                  
 
+                    <form action="/books/<%= items.id%>" method="get">
+                        
+                        <input type="submit" value="View Details ">
+                    </form>
+                    
+                </div>
+            <% })%>
+        </div>
+    </div>
+  
     <footer>
         <ul>
             <li> <i class="fas fa-circle"></i></li>
