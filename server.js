@@ -17,8 +17,8 @@ require('dotenv').config();
 let pg  = require('pg');
 const PORT = process.env.PORT;
 
-const client = new pg.Client(process.env.DATABASE_URL);
-// const client = new pg.Client({ connectionString: process.env.DATABASE_URL,   ssl: { rejectUnauthorized: false } });
+// const client = new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client({ connectionString: process.env.DATABASE_URL,   ssl: { rejectUnauthorized: false } });
 
 
 app.get('/', hendleHome);
@@ -40,17 +40,18 @@ function handleError(req,res){
 
 function hendleHome(req, res){
     let sqlQuery = `select * from books`;
-    let count = "select count(id) as total from books";
+    
 
     client.query(sqlQuery).then(data => {
-        // console.log('data returned back from db ', countData());
-        var totalBook ;
+
+        let count = "select count(id) as total from books";
+      
         client.query(count).then(total => {
-            totalBook = total.rows[0];
            
+            res.render('pages/index', {books: data.rows ,  total :total.rows});
             
         });
-        res.render('pages/index', {books: data.rows , total: totalBook});
+       
     }).catch(error =>{
        
         handleError(req,res);

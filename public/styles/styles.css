@@ -48,7 +48,12 @@ nav h1 {
     
 
 }
+span{
+    background-color: #868484;
+    border-radius: 50%;
+  
 
+}
 form{
     width: 70%;
 }
