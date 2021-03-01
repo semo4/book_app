@@ -16,7 +16,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 require('dotenv').config();
 const PORT = process.env.PORT;
 
+
 app.get('/', hendleHome);
+app.get('/search', hendleSearch);
 // app.get('/searches/new', handleSearchPage);
 app.post('/show', handleBookSearch);
 app.get('/error', handleError);
@@ -33,6 +35,9 @@ function handleError(req,res){
 function hendleHome(req, res){
     res.render('pages/index');
 }
+function hendleSearch(req, res){
+    res.render('pages/searches/new');
+}
 
 
 
@@ -43,10 +48,11 @@ function handleBookSearch(req, res){
     console.log(req);
     console.log(terms);
     
-    let concatSearch= searchquery+"+in"+terms;
+    let concatSearch= "+in"+terms+':'+searchquery;
     console.log(concatSearch);
 
     let defaultInmge = "https://i.imgur.com/J5LVHEL.jpg";
+
     const url = 'https://www.googleapis.com/books/v1/volumes';
     
     let query = {

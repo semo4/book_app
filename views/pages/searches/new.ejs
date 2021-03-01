@@ -27,8 +27,32 @@
             <h1> Search By Tilte Or Author </h1>
         </div>
         <div class="form-contanier">
-           <h1>Hello to Search Book </h1>
-           <h1><a href="/search">Search Page</a></h1>
+            <form action="/show" method="post">
+                <div claas="searh">
+                    <input type="text" name="searchquery" placeholder="Enter title or auther name">
+                </div>
+                <div class="check-cont">
+                    <div class="checkbox">
+                        <label for="title-radio">Title</label>
+                        <input type="radio" name="select" value="title">
+                    </div>
+
+                    <div class="checkbox">
+                        <label for="auther-radio">Author</label>
+                        <input type="radio" name="select" value="author">
+                    </div>
+                </div>
+
+
+
+
+                <div class="button">
+                    <input type="submit" id="search" Value="Search the Google Books API">
+                </div>
+
+
+
+            </form>
         </div>
     </div>
 
