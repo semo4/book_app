@@ -4,6 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
+const override = require('method-override');
 
 
 let app = express();
@@ -11,10 +12,12 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
+app.use(override('_method'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 require('dotenv').config();
 let pg  = require('pg');
+
 const PORT = process.env.PORT;
 
 // const client = new pg.Client(process.env.DATABASE_URL);
@@ -28,6 +31,10 @@ app.post('/show', handleBookSearch);
 app.get('/error', handleError);
 app.post('/books', handlesave);
 app.get('/books/:id', handleDetails);
+app.post('/books/:id', handleUpdate);
+app.delete('/books/:id', handleDelete);
+app.put('/books/:id', handleUpdateData);
+
 
 app.get('*',handleerror);
 function handleerror(req, res){
@@ -159,10 +166,51 @@ function handleDetails(req,res){
         res.render('pages/books/detail', {books: data.rows});
     }).catch(error =>{
         handleError(req,res);
-       
-
     });
 }
+
+function handleUpdate(req, res){
+    let id = req.params.id;
+    let sqlQuery = `SELECT * FROM books WHERE id = ${id}`;
+ 
+    client.query(sqlQuery).then(data => {
+       
+        res.render('pages/books/edit', {books: data.rows});
+    }).catch(error =>{
+        handleError(req,res);
+    });
+}
+
+function handleDelete(req, res){
+    let id = req.params.id;
+    let sqlQuery = `DELETE FROM books WHERE id = ${id}`;
+ 
+    client.query(sqlQuery).then(data => {
+       
+        res.redirect('/');
+    }).catch(error =>{
+        handleError(req,res);
+    });
+}
+
+function handleUpdateData(req,res){
+    let id = req.params.id;
+    let title = req.body.title;
+    let author =  req.body.author;
+    let description =  req.body.description;
+    let image =  req.body.image;
+    let isbn =  req.body.isbn;
+    let sqlQuery = `UPDATE books SET title=$1 ,author=$2, isbn=$3,  description=$4  WHERE id =$5`;
+    let value = [title,author, isbn,  description, id];
+ 
+    client.query(sqlQuery,value).then(data => {
+        res.redirect('/books/'+id);
+    }).catch(error =>{
+        handleError(req,res);
+    });
+}
+
+
 
 function Book(title, author, description, image,isbn){
     this.title= title;

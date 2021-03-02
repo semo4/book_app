@@ -1,0 +1,21 @@
+
+        <div class="books" id='edit-form' style="display:none;">
+           
+               
+                <% books.forEach((items)=>{ %>
+                    <form action="/books/<%= items.id%>?_method=PUT" method="post" >
+                        <img src="<%= items.image_url%>">
+                        <input name="title" type="text" value="<%= items.title%>">
+                        <input name="author" type="text" value="<%= items.author%>">
+                        <textarea rows="10" cols="96" name ="description">
+                            <%= items.description%>
+                        </textarea>
+                    
+                        <input name="isbn" type="text" value="<%= items.isbn%>">
+                        
+                     
+                        <input type="submit" value="Update this  Book">
+                    </form>
+                <% })%>
+         
+        </div>

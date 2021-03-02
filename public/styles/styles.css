@@ -71,6 +71,16 @@ span{
   
 
 }
+button{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2.5px solid #000000;
+    border-radius: 4px;
+    box-sizing: border-box;
+   
+}
 form{
     width: 70%;
 }
@@ -130,7 +140,11 @@ ul{
       margin-top:20px ;
       color: lightgrey;
   }
-
+#edit-form{
+    border: 2px solid #000;
+    width: 70%;
+    padding: 20px;
+}
   .books{
     display : flex;
     flex-wrap: wrap;
