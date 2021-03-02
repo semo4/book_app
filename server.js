@@ -122,7 +122,7 @@ function handleBookSearch(req, res){
         if(isbn===undefined){
             isbn = "00000000";
         }else{
-            isbn = isbn[0].identifier;
+            isbn =isbn[0].type+isbn[0].identifier;
         }
       
         if(image === undefined){
