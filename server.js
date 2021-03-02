@@ -169,10 +169,7 @@ function Book(title, author, description, image,isbn){
     this.author= author;
     this.description = description;
     this.image = image;
-
     this.isbn = isbn;
-
-    console.log("value in cons   ***   ", isbn);
 }
 
 client.connect().then(data => {

@@ -17,19 +17,12 @@
 
 <body>
 
-    <header>
-        <nav>
-            <h1>Best Books! </h1>
-        </nav>
-    </header>
+    <%- include('../layout/header') %>
     <div class="container">
         <div class="header">
             <h1><span><%= total[0].total %></span>  Saved Books</h1>
         </div>
-        <div class="form-contanier">
-           <h1>Hello to Search Book </h1><br>
-           <h1><a href="/search">Search Page</a></h1>
-        </div>
+        
         <div class="books">
             <% books.forEach((items)=>{ %>
                 <div class="book-container">
@@ -49,15 +42,7 @@
         </div>
     </div>
   
-    <footer>
-        <ul>
-            <li> <i class="fas fa-circle"></i></li>
-            <li> <i class="fas fa-circle"></i></li>
-            <li> <i class="fas fa-circle"></i></li>
-            <li> <i class="fas fa-circle"></i></li>
-            <li> <i class="fas fa-circle"></i></li>
-        </ul>
-    </footer>
+    <%- include('../layout/footer') %>
 
 
 
