@@ -142,13 +142,21 @@ ul{
   }
 #edit-form{
     border: 2px solid #000;
-    width: 60%;
+    width: 45%;
     padding: 20px;
     position: fixed;
-    bottom: 0;
+    bottom: 20px;
     right: 20%;
     background-color: #868383;
     z-index: 9;
+}
+#edit-form form{
+    width: 100%;
+}
+#edit-form img{
+    margin: 20px; 
+    width: 30%;
+    height: 20vh;
 }
   .books{
     display : flex;
@@ -170,7 +178,7 @@ ul{
   img{
       margin: 20px; 
       width: 50%;
-      height: 40vh
+      height: 40vh;
   }
   .book-container{
     background-color: #D8D8D8;
