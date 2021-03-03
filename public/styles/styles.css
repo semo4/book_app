@@ -142,8 +142,13 @@ ul{
   }
 #edit-form{
     border: 2px solid #000;
-    width: 70%;
+    width: 60%;
     padding: 20px;
+    position: fixed;
+    bottom: 0;
+    right: 20%;
+    background-color: #868383;
+    z-index: 9;
 }
   .books{
     display : flex;
